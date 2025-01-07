@@ -1,0 +1,60 @@
+/* Basic styling for the Home page */
+.home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.home-container h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.home-container h2 {
+    font-size: 2rem;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.home-container p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.home-container ul, .home-container ol {
+    text-align: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.home-container li {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.home-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.home-container button:hover {
+    background-color: #0056b3;
+}
+
+.testimonials p {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 15px;
+}

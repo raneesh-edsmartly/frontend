@@ -1,0 +1,129 @@
+:root {
+  --chat-width: 100vw;
+  --container-width: 100vw;
+}
+
+/* Override variables within the .site-content scope */
+.site-content {
+  --content-width: 45vw; /* Override the value */
+  --content-max-width: 1200px; /* Override the value */
+  --content-min-width: 300px; /* Override the value */
+}
+
+/* Container styles */
+.container {
+  width: var(--content-width);
+  max-width: var(--content-max-width);
+  min-width: var(--content-min-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-small);
+}
+
+/* Chat history styles */
+.chat-history {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+/* Range input styles */
+input[type="range"] {
+  height: 2px;
+  background: linear-gradient(to right, #3b82f6 var(--slider-percent), #ddd var(--slider-percent));
+  outline: none;
+  border-radius: 2px;
+  appearance: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="range"]::-moz-range-track {
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #3b82f6 var(--slider-percent), #ddd var(--slider-percent));
+  height: 2px;
+  border-radius: 2px;
+}
+
+/* Message slide-in animation */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  animation: messageSlideIn 0.3s ease-out forwards;
+}
+
+/* Subject card hover effect */
+.subject-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.subject-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat container and interface transitions */
+.chat-container {
+  transition: all 0.3s ease-in-out;
+}
+
+.chat-interface {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Learning settings, chat interface, and chat container width */
+.learning-settings,
+.chat-interface,
+.chat-container {
+  width: 100%;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .container {
+    width: 95vw !important;
+    padding: var(--spacing-small) !important;
+  }
+
+  .chat-interface,
+  .learning-settings {
+    width: 90vw !important;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

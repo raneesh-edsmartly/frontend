@@ -1,0 +1,207 @@
+/* MainLayout.css */
+
+/* Ensure html and body take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+
+/* Base Styles */
+:root {
+  --content-width: 85vw;
+  --content-max-width: 1400px;
+  --content-min-width: 320px;
+  --header-height: 2.5rem;
+  --footer-height: 2rem;
+  --spacing-small: clamp(0.25rem, 0.5vw, 0.5rem);
+  --spacing-medium: clamp(0.5rem, 1vw, 1rem);
+
+  /* Custom padding properties */
+  --padding-top: var(--spacing-small);
+  --padding-bottom: var(--spacing-small);
+  --padding-left: var(--spacing-medium);
+  --padding-right: var(--spacing-medium);
+
+  /* Hover effect colors */
+  --nav-hover-bg: #333333;
+  --nav-hover-radius: 4px;
+}
+
+/* Header Section Styling */
+.main-nav {
+  background: #000000;
+  padding: var(--padding-top) var(--padding-right) var(--padding-bottom) var(--padding-left);
+  height: 10vh; /* Adjust this value to change the header height */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-nav__left img { /* EDSMARTLY LOGO SIZE */
+  height: 4vh; /* Height based on viewport height */
+  width: auto; /* Width adjusts automatically */
+}
+
+.main-nav__left {
+  margin-left: 8%; /* Adjust this value to move the logo horizontally */
+}
+
+
+.main-nav__right {
+  margin-right: 8%; /* Adjust this value to move the links horizontally */
+  margin-top: 6vh; /* Move the navigation menu down by 2% of the viewport height */
+}
+
+.main-nav__right ul {
+  display: flex;
+  list-style: none;
+  gap: 1vh; /* Gap between links based on viewport height */
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav__right ul li a {
+  color: #f5f5f5;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 2vh; /* Font size based on viewport height */
+  padding: 1vh 2vh; /* Padding based on viewport height */
+  border-radius: var(--nav-hover-radius);
+  transition: background-color 0.3s ease;
+}
+
+/* Hover Effect */
+.main-nav__right ul li a:hover {
+  background-color: var(--nav-hover-bg);
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  :root {
+    --content-width: 95vw;
+  }
+
+  .main-nav__right ul {
+    gap: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-nav {
+    flex-direction: column;
+    gap: var(--spacing-small);
+  }
+
+  .main-nav__right ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem;
+  }
+}
+
+
+
+
+/* Footer Section Styling */
+.main-footer {
+  background: #000000;
+  color: #f5f5f5;
+  padding-top: 10vh; /* Top padding based on vh */
+  padding-bottom: 10vh; /* Bottom padding based on vh */
+  padding-left: var(--padding-left); /* Left padding */
+  padding-right: var(--padding-right); /* Right padding */
+  width: 100%;
+  height: 10vh; /* Set footer height to match the header */
+  display: flex; /* Ensure flexbox layout for alignment */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}
+
+.main-footer__row,
+.main-footer__header,
+.main-footer__row-wrap,
+.main-footer__footer {
+  width: var(--content-width);
+  max-width: var(--content-max-width);
+  min-width: var(--content-min-width);
+  margin: 0 auto;
+}
+
+.main-footer__logo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.main-footer__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-small); /* Reduced gap */
+}
+
+.main-footer__logo img {
+  height: 5vh; /* Set the logo height based on viewport height */
+  width: auto; /* Maintain aspect ratio */
+}
+
+.main-footer__flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-small); /* Reduced gap */
+}
+
+/* Content Section */
+.container {
+  width: var(--content-width);
+  max-width: var(--content-max-width);
+  min-width: var(--content-min-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-small);
+}
+
+.site-content {
+  background: #ffffff;
+  padding: var(--spacing-medium);
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  :root {
+    --content-width: 95vw;
+  }
+
+  .main-nav__right ul {
+    gap: 0.25rem; /* Further reduced from 0.5rem */
+  }
+
+  .main-footer__flex {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-nav__row {
+    flex-direction: column;
+    gap: var(--spacing-small); /* Reduced gap */
+  }
+
+  .main-nav__right ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.125rem; /* Further reduced from 0.25rem */
+  }
+
+  .main-footer__row {
+    flex-direction: column;
+  }
+}

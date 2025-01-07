@@ -1,0 +1,42 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap');
+
+/* Apply 'Libre Baskerville' to all headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Apply 'Work Sans' to all normal text */
+body {
+  font-family: 'Work Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100vh; /* Ensure the body takes up the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Common class for all pages */
+.page-content {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Ensure the root element takes up the full height */
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
