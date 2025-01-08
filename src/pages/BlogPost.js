@@ -11,7 +11,7 @@ const BlogPost = () => {
   const [blog, setBlog] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_BASE_URL = 'http://localhost:8000';
+  const API_BASE_URL = process.env.REACT_APP_API_URL; // Use environment variable
 
   const fetchBlog = useCallback(async () => {
     setIsLoading(true);
@@ -24,7 +24,7 @@ const BlogPost = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [blog_id]);
+  }, [blog_id, API_BASE_URL]);
 
   useEffect(() => {
     fetchBlog();

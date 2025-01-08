@@ -1,4 +1,3 @@
-// src/pages/MCQ.js
 import React, { useState, useCallback, useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import MCQSettings from '../components/MCQSettings';
@@ -81,7 +80,7 @@ const MCQPage = () => {
     setScore(0);
 
     try {
-      const response = await fetch('http://localhost:8000/mcq/generate/', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/mcq/generate/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

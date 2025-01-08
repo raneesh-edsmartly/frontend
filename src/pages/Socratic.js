@@ -33,8 +33,8 @@ const SocraticChat = () => {
     try {
       const response = await fetch(
         sessionId 
-          ? `http://localhost:8000/chat/chat/${sessionId}/follow-up`
-          : 'http://localhost:8000/chat/chat/',
+          ? `${process.env.REACT_APP_API_URL}/chat/chat/${sessionId}/follow-up`
+          : `${process.env.REACT_APP_API_URL}/chat/chat/`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

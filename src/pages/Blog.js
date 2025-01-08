@@ -13,7 +13,7 @@ const Blog = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_BASE_URL = 'http://localhost:8000';
+  const API_BASE_URL = process.env.REACT_APP_API_URL; // Use environment variable
 
   const fetchBlogs = useCallback(async () => {
     setIsLoading(true);
@@ -27,7 +27,7 @@ const Blog = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [currentPage]);
+  }, [currentPage, API_BASE_URL]);
 
   const fetchCategories = useCallback(async () => {
     try {
@@ -38,7 +38,7 @@ const Blog = () => {
       console.error("Error fetching categories:", error);
       toast.error("Failed to fetch categories. Please try again later.");
     }
-  }, []);
+  }, [API_BASE_URL]);
 
   useEffect(() => {
     fetchBlogs();
