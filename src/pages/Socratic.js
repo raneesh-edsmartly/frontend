@@ -3,8 +3,9 @@ import BiologyImage from '../assets/socratic/biology.jpg';
 import ChemistryImage from '../assets/socratic/chemistry.jpg';
 import PhysicsImage from '../assets/socratic/physics.jpg';
 import MathsImage from '../assets/socratic/maths.jpg';
-import LearningSettings from '../components/LearningSettings';
+import ChatLearningSettings from '../components/ChatLearningSettings';
 import ChatInterface from '../components/ChatInterface';
+import ChatBackgroundWrapper from '../components/ChatBackgroundWrapper';
 
 const SocraticChat = () => {
   const [sessionId, setSessionId] = useState(localStorage.getItem('session_id') || null);
@@ -33,8 +34,8 @@ const SocraticChat = () => {
     try {
       const response = await fetch(
         sessionId 
-          ? `${process.env.REACT_APP_API_URL}/chat/chat/${sessionId}/follow-up`
-          : `${process.env.REACT_APP_API_URL}/chat/chat/`,
+          ? `${process.env.REACT_APP_API_URL}/chat-new/chat/${sessionId}/follow-up`
+          : `${process.env.REACT_APP_API_URL}/chat-new/chat/`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -86,44 +87,46 @@ const SocraticChat = () => {
 
   return (
     <div className="container mx-auto px-4 relative">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-center">Socratic Learning Machine</h1>
-        <div className="space-y-6">
-          <LearningSettings
-            subjects={subjects}
-            selectedSubject={subject}
-            onSubjectSelect={setSubject}
-            grade={grade}
-            onGradeChange={setGrade}
-            difficulty={difficulty}
-            onDifficultyChange={setDifficulty}
-            defaultExpanded={false}
-          />
-          <ChatInterface
-            chatHistory={chatHistory}
-            userInput={userInput}
-            setUserInput={setUserInput}
-            handleSubmit={handleSubmit}
-            loading={loading}
-          />
-        </div>
-        {error && (
-          <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-lg">
-            {error}
+      <ChatBackgroundWrapper> {/* Wrap the entire content */}
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8 text-center">Socratic Learning Machine</h1>
+          <div className="space-y-6">
+            <ChatLearningSettings
+              subjects={subjects}
+              selectedSubject={subject}
+              onSubjectSelect={setSubject}
+              grade={grade}
+              onGradeChange={setGrade}
+              difficulty={difficulty}
+              onDifficultyChange={setDifficulty}
+              defaultExpanded={false}
+            />
+            <ChatInterface
+              chatHistory={chatHistory}
+              userInput={userInput}
+              setUserInput={setUserInput}
+              handleSubmit={handleSubmit}
+              loading={loading}
+            />
           </div>
-        )}
-        <div className="mt-8 p-4 rounded-lg text-center">
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-sm text-gray-600">Session ID: {sessionId || 'No session'}</span>
-            <button
-              onClick={finishSession}
-              className="px-3 py-1 bg-gray-300 hover:bg-gray-400 text-white rounded-md text-sm transition-colors"
-            >
-              Finish Session
-            </button>
+          {error && (
+            <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-lg">
+              {error}
+            </div>
+          )}
+          <div className="mt-8 p-4 rounded-lg text-center">
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-sm text-gray-600">Session ID: {sessionId || 'No session'}</span>
+              <button
+                onClick={finishSession}
+                className="px-3 py-1 bg-gray-300 hover:bg-gray-400 text-white rounded-md text-sm transition-colors"
+              >
+                Finish Session
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </ChatBackgroundWrapper>
     </div>
   );
 };

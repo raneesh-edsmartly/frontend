@@ -1,4 +1,3 @@
-// src/components/MCQInterface.js
 import React from 'react';
 import { BookOpen, Brain } from 'lucide-react';
 
@@ -10,19 +9,18 @@ const MCQInterface = ({
   loading,
   error,
   isFinished,
-  timeRemaining 
 }) => {
   const [currentQuestion, setCurrentQuestion] = React.useState(0);
   const totalQuestions = mcqs.length;
-  const progress = totalQuestions > 0 ? (Object.keys(selectedOptions).length / totalQuestions) * 100 : 0;
 
-  // Format remaining time
-  const formatTime = (seconds) => {
-    if (seconds === null) return '';
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
+  // Improved progress calculation
+  const answeredQuestions = mcqs.filter(mcq => 
+    selectedOptions.hasOwnProperty(mcq.question_id)
+  ).length;
+
+  const progress = totalQuestions > 0 
+    ? (answeredQuestions / totalQuestions) * 100 
+    : 0;
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -36,11 +34,9 @@ const MCQInterface = ({
                 Question {currentQuestion + 1} of {totalQuestions}
               </span>
             </div>
-            {timeRemaining !== null && (
-              <span className="font-medium">
-                Time: {formatTime(timeRemaining)}
-              </span>
-            )}
+            <div className="text-sm text-gray-600">
+              Answered: {answeredQuestions} / {totalQuestions}
+            </div>
           </div>
           {/* Progress Bar */}
           <div className="h-2 bg-gray-200 rounded-full">
@@ -52,7 +48,7 @@ const MCQInterface = ({
         </div>
       )}
 
-      {/* Question Display */}
+      {/* Rest of the existing code remains the same */}
       {mcqs.length > 0 && (
         <div className="bg-white rounded-lg shadow-sm">
           <div className="p-6">

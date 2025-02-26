@@ -1,142 +1,103 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import HomeImage from '../assets/home.jpg'; // Import the home image
-import SocraticImage from '../assets/socratic.jpg'; // Import the Socratic image
-import McqImage from '../assets/mcq.jpg'; // Import the MCQ image
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
+import HomeImage from '../assets/home.jpg';
+import './Home.css';
 
 const Homepage = () => {
+  // Static vignette settings - adjust these values directly in the code
+  const [vignetteSettings] = useState({
+    opacity: 70,  // Opacity percentage (0-100)
+    spread: 40,   // Spread percentage (0-100)
+    color: '#000000' // Vignette color (hex)
+  });
+
+  // State for image loading
+  const [imagesLoaded, setImagesLoaded] = useState({
+    hero: false,
+  });
+
+  // State for background color transition
+  const [backgroundColor, setBackgroundColor] = useState('bg-[#0B1120]'); // Start with dark blue
+
+  // Intersection Observer for animations
+  const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  // Simulated progressive image loading
+  useEffect(() => {
+    const loadImage = (src, key) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        setImagesLoaded(prev => ({ ...prev, [key]: true }));
+        // Change background color to deep purple when the hero image is loaded
+        if (key === 'hero') {
+          setBackgroundColor('bg-[#1A1033]');
+        }
+      };
+    };
+
+    // Load images progressively with a delay to simulate a loading sequence
+    setTimeout(() => loadImage(HomeImage, 'hero'), 100);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-      {/* Hero Section with Image */}
-      <section className="w-full relative">
-        {/* Image with original aspect ratio */}
-        <img src={HomeImage} alt="Home" className="w-full h-auto object-cover" />
+    <div className="bg-gradient-to-br from-[#0B1120] to-[#1A1033]">
+      {/* Hero Section with Progressive Loading and Vignette */}
+      <section 
+        ref={heroRef}
+        className={`relative w-full transition-opacity duration-1000 ${
+          heroInView ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        {/* Hero Image Container with Dynamic Background Transition */}
+        <div className={`h-screen ${backgroundColor} relative transition-colors duration-1000`}>
+          <div className={`w-full h-full transition-opacity duration-700 ${
+            imagesLoaded.hero ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+          }`}>
+            <img 
+              src={HomeImage}
+              alt="Home" 
+              className="w-full h-full object-cover"
+            />
+            {/* Vignette Overlay */}
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: `radial-gradient(
+                  circle at center,
+                  transparent ${100 - vignetteSettings.spread}%,
+                  ${vignetteSettings.color}${Math.round(vignetteSettings.opacity * 0.01 * 255).toString(16).padStart(2, '0')} 100%
+                )`
+              }}
+            />
+          </div>
+        </div>
         
-        {/* Glassmorphic Hero Content with Manual Blur Control */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 backdrop-blur-[0px]">
-          <div className="max-w-6xl mx-auto text-center px-4">
-            <div className="bg-white/30 backdrop-blur-[1px] rounded-2xl p-8 shadow-lg border border-white/20">
-              <h1 className="text-4xl font-bold text-gray-900 mb-6">
+        {/* Hero Content */}
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-0">
+          <div className="w-full px-4 md:px-8">
+            <div className={`bg-[#1E1E2E]/30 backdrop-blur-1 rounded-xl p-4 md:p-8 shadow-lg border border-[rgba(147, 112, 219, 0.2)] mx-20 text-center transform transition-all duration-1000 ${
+              heroInView ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            }`}>
+              <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-[#E2E0FF] to-[#FFFFFF] bg-clip-text text-transparent mb-4 md:mb-6">
                 Transforming Education with Socratic Learning Machines
               </h1>
-              <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-[#E5E7EB] mb-6 md:mb-8">
                 Discover how we are pushing the boundaries of education
               </p>
-              <div className="space-x-4">
-                {/* Link to Socratic.js */}
-                <Link to="/socratic">
-                  <button className="bg-white/20 text-gray-900 px-8 py-3 rounded-lg font-medium hover:bg-gray-300/50 transition duration-300">
+              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center">
+                <Link to="/socraticflow" className="w-full md:w-auto">
+                  <button className="w-full bg-[#2E1065]/20 text-[#C7D2FE] px-6 py-3 rounded-lg font-medium hover:bg-[#2E1065]/30 transition duration-300">
                     Socratic Learning Machine
                   </button>
                 </Link>
-                {/* Link to MCQ.js */}
-                <Link to="/mcq">
-                  <button className="bg-white/20 text-gray-900 px-8 py-3 rounded-lg font-medium hover:bg-gray-300/50 transition duration-300">
-                    Socratic MCQ Generator
+                <Link to="/mcq-pro" className="w-full md:w-auto">
+                  <button className="w-full bg-[#2E1065]/20 text-[#C7D2FE] px-6 py-3 rounded-lg font-medium hover:bg-[#2E1065]/30 transition duration-300">
+                    Socratic Quiz Studio
                   </button>
                 </Link>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Solutions Section */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">
-            Our Solutions
-          </h2>
-          
-          {/* Socratic Learning System */}
-          <div className="mb-20">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-              Socratic Learning System
-            </h3>
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
-                <p className="text-gray-700 mb-6">
-                  Our advanced AI-powered dialogue system transforms traditional textbooks into 
-                  interactive learning experiences. Using sophisticated retrieval-augmented 
-                  generation technology, students can engage in meaningful conversations about 
-                  their study material.
-                </p>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-1">
-                      <div className="h-2 w-2 rounded-full bg-blue-600"></div>
-                    </div>
-                    <span className="text-gray-700">Transform any educational content into an interactive learning experience</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-1">
-                      <div className="h-2 w-2 rounded-full bg-blue-600"></div>
-                    </div>
-                    <span className="text-gray-700">Adapt to each student's pace and learning style</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
-                {/* Interactive demo with Socratic image */}
-                <div className="bg-gray-100/50 h-64 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={SocraticImage} alt="Socratic Learning System" className="w-full h-full object-cover" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* MCQ Generation System */}
-          <div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-              Socratic MCQ Generation System
-            </h3>
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
-                {/* Assessment demo with MCQ image */}
-                <div className="bg-gray-100/50 h-64 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img src={McqImage} alt="MCQ Generation System" className="w-full h-full object-cover" />
-                </div>
-              </div>
-              <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
-                <p className="text-gray-700 mb-6">
-                  Our intelligent assessment system generates high-quality multiple choice 
-                  questions that align perfectly with educational standards while adapting 
-                  to individual student needs.
-                </p>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-1">
-                      <div className="h-2 w-2 rounded-full bg-blue-600"></div>
-                    </div>
-                    <span className="text-gray-700">Questions mapped to educational frameworks and learning objectives</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-1">
-                      <div className="h-2 w-2 rounded-full bg-blue-600"></div>
-                    </div>
-                    <span className="text-gray-700">Assessment difficulty that adjusts to student performance</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-20 px-4 text-center">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white/30 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/20">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">
-              Join the Educational Revolution with EDSMARTLY
-            </h2>
-            <div className="space-y-4">
-              <button className="bg-cyan-500/90 text-white px-8 py-3 rounded-lg font-medium hover:bg-cyan-700/90 transition duration-300 w-full md:w-auto md:ml-4">
-                Request a Demo
-              </button>
-              <button className="bg-cyan-500/90 text-white px-8 py-3 rounded-lg font-medium hover:bg-cyan-700/90 transition duration-300 w-full md:w-auto md:ml-4">
-                Start Free Trial
-              </button>
             </div>
           </div>
         </div>

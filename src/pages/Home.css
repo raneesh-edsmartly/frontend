@@ -27,8 +27,9 @@
 }
 
 .home-container ul, .home-container ol {
-    text-align: left;
-    margin-left: 20px;
+    text-align: center; /* Center-align list items */
+    list-style-position: inside; /* Ensure bullets/numbers are inside the centered block */
+    margin-left: 0; /* Remove default left margin */
     margin-bottom: 20px;
 }
 

@@ -1,63 +1,85 @@
 /* MainLayout.css */
 
-/* Ensure html and body take full height */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-
-/* Base Styles */
+/* Root Variables */
 :root {
-  --content-width: 85vw;
-  --content-max-width: 1400px;
-  --content-min-width: 320px;
-  --header-height: 2.5rem;
+  --header-height: 5.3rem;
   --footer-height: 2rem;
-  --spacing-small: clamp(0.25rem, 0.5vw, 0.5rem);
-  --spacing-medium: clamp(0.5rem, 1vw, 1rem);
-
-  /* Custom padding properties */
-  --padding-top: var(--spacing-small);
-  --padding-bottom: var(--spacing-small);
-  --padding-left: var(--spacing-medium);
-  --padding-right: var(--spacing-medium);
-
-  /* Hover effect colors */
+  --content-width: 95vw;
+  --mobile-padding: 1rem;
+  --desktop-padding: 2rem;
   --nav-hover-bg: #333333;
   --nav-hover-radius: 4px;
 }
 
-/* Header Section Styling */
+/* Base Layout Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #000000;
+}
+
+.site-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--header-height) - 1rem);
+  background: #000000;
+}
+
+.site-content {
+  flex: 1;
+  padding: 0 var(--mobile-padding);
+  transition: filter 0.3s ease;
+  background: #ffffff;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  width: var(--content-width);
+  margin: 0 auto;
+  background: transparent;
+}
+
+.container {
+  width: var(--content-width);
+  margin: 0 auto;
+}
+
+/* Header/Navigation Styles */
 .main-nav {
   background: #000000;
-  padding: var(--padding-top) var(--padding-right) var(--padding-bottom) var(--padding-left);
-  height: 10vh; /* Adjust this value to change the header height */
+  padding: 1rem var(--mobile-padding);
+  height: var(--header-height);
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.main-nav__left img { /* EDSMARTLY LOGO SIZE */
-  height: 4vh; /* Height based on viewport height */
-  width: auto; /* Width adjusts automatically */
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .main-nav__left {
-  margin-left: 8%; /* Adjust this value to move the logo horizontally */
+  margin-left: 8%;
+  display: flex;
+  align-items: center;
 }
 
+.main-nav__left img {
+  height: 3rem;
+  width: auto;
+}
 
 .main-nav__right {
-  margin-right: 8%; /* Adjust this value to move the links horizontally */
-  margin-top: 6vh; /* Move the navigation menu down by 2% of the viewport height */
+  margin-right: 8%;
+  margin-top: 2rem;
+  display: none;
 }
 
 .main-nav__right ul {
   display: flex;
   list-style: none;
-  gap: 1vh; /* Gap between links based on viewport height */
+  gap: 1rem;
   margin: 0;
   padding: 0;
 }
@@ -66,57 +88,57 @@ html, body {
   color: #f5f5f5;
   text-decoration: none;
   font-weight: 500;
-  font-size: 2vh; /* Font size based on viewport height */
-  padding: 1vh 2vh; /* Padding based on viewport height */
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
   border-radius: var(--nav-hover-radius);
   transition: background-color 0.3s ease;
 }
 
-/* Hover Effect */
 .main-nav__right ul li a:hover {
   background-color: var(--nav-hover-bg);
 }
 
-/* Responsive Adjustments */
-@media screen and (max-width: 768px) {
-  :root {
-    --content-width: 95vw;
-  }
-
-  .main-nav__right ul {
-    gap: 0.25rem;
-  }
+/* Mobile Navigation Menu */
+.mobile-menu {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
 }
 
-@media screen and (max-width: 480px) {
-  .main-nav {
-    flex-direction: column;
-    gap: var(--spacing-small);
-  }
-
-  .main-nav__right ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.125rem;
-  }
+.mobile-menu.open {
+  transform: translateX(0);
 }
 
+.mobile-menu__links {
+  padding: 2rem var(--mobile-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-
-
-/* Footer Section Styling */
+/* Footer Styles */
 .main-footer {
   background: #000000;
   color: #f5f5f5;
-  padding-top: 10vh; /* Top padding based on vh */
-  padding-bottom: 10vh; /* Bottom padding based on vh */
-  padding-left: var(--padding-left); /* Left padding */
-  padding-right: var(--padding-right); /* Right padding */
+  padding: 2rem var(--mobile-padding);
   width: 100%;
-  height: 10vh; /* Set footer height to match the header */
-  display: flex; /* Ensure flexbox layout for alignment */
-  align-items: center; /* Center content vertically */
-  justify-content: center; /* Center content horizontally */
+  height: var(--footer-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-content {
+  width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .main-footer__row,
@@ -124,8 +146,6 @@ html, body {
 .main-footer__row-wrap,
 .main-footer__footer {
   width: var(--content-width);
-  max-width: var(--content-max-width);
-  min-width: var(--content-min-width);
   margin: 0 auto;
 }
 
@@ -135,15 +155,9 @@ html, body {
   width: 100%;
 }
 
-.main-footer__row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-small); /* Reduced gap */
-}
-
 .main-footer__logo img {
-  height: 5vh; /* Set the logo height based on viewport height */
-  width: auto; /* Maintain aspect ratio */
+  height: 3rem;
+  width: auto;
 }
 
 .main-footer__flex {
@@ -151,57 +165,130 @@ html, body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--spacing-small); /* Reduced gap */
+  gap: 1rem;
 }
 
-/* Content Section */
-.container {
-  width: var(--content-width);
-  max-width: var(--content-max-width);
-  min-width: var(--content-min-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-small);
-}
-
-.site-content {
-  background: #ffffff;
-  padding: var(--spacing-medium);
-  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+.footer-section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
   justify-content: center;
 }
 
-/* Responsive Adjustments */
-@media screen and (max-width: 768px) {
+.footer-bottom {
+  width: var(--content-width);
+  margin: 2rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+/* Typography */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Work Sans', sans-serif;
+}
+
+/* Utility Classes */
+.blur-sm {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 768px) {
   :root {
     --content-width: 95vw;
   }
 
-  .main-nav__right ul {
-    gap: 0.25rem; /* Further reduced from 0.5rem */
+  .site-content {
+    padding: 0 var(--desktop-padding);
   }
 
-  .main-footer__flex {
-    flex-direction: column;
+  .container {
+    padding: 0;
+  }
+
+  .main-nav__right {
+    display: block;
+    margin-left: auto;
+  }
+
+  .main-nav__right ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .mobile-menu-button {
+    display: none;
+  }
+
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .footer-section {
     align-items: flex-start;
+    text-align: left;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
-@media screen and (max-width: 480px) {
-  .main-nav__row {
-    flex-direction: column;
-    gap: var(--spacing-small); /* Reduced gap */
-  }
+/* Animation Classes */
+.fade-enter {
+  opacity: 0;
+}
 
-  .main-nav__right ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.125rem; /* Further reduced from 0.25rem */
-  }
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in;
+}
 
-  .main-footer__row {
-    flex-direction: column;
-  }
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+/* Add to MainLayout.css */
+.main-nav__right ul li a.auth-link {
+  background-color: #38bdf8; /* Light emerald blue */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.7s ease; /* 0.7s delay on hover */
+}
+
+.main-nav__right ul li a.auth-link:hover {
+  background-color: #0369a1; /* Dark emerald blue */
 }

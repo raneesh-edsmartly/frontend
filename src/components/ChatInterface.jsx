@@ -1,5 +1,7 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown'; // Import react-markdown
+import remarkGfm from 'remark-gfm'; // Import remark-gfm for GitHub Flavored Markdown
 
 const ChatInterface = ({ 
   chatHistory, 
@@ -30,11 +32,15 @@ const ChatInterface = ({
                 <div className="font-medium mb-2">
                   {entry.sender === 'user' ? 'You' : 'Socrates'}
                 </div>
-                <div 
-                  dangerouslySetInnerHTML={{ 
-                    __html: entry.message.replace(/\n/g, '<br />') 
-                  }} 
-                />
+                {/* Use ReactMarkdown to render the message with custom paragraph spacing */}
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    p: ({node, ...props}) => <p style={{ marginBottom: '1.5em' }} {...props} />,
+                  }}
+                >
+                  {entry.message}
+                </ReactMarkdown>
               </div>
             );
           })}

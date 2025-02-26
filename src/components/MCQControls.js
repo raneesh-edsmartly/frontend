@@ -25,15 +25,13 @@ const MCQControls = ({ onGenerate, onReset, onFinish, loading, isFinished, mcqs 
         </button>
       )}
 
-      {/* Show Reset button only if MCQs are generated or finished */}
-      {(mcqs.length > 0 || isFinished) && (
-        <button
-          onClick={onReset}
-          className="px-[3vh] py-[1vh] bg-gray-300 text-gray-700 rounded hover:bg-gray-400 text-[2vh]"
-        >
-          Reset
-        </button>
-      )}
+      {/* Always show Reset button */}
+      <button
+        onClick={onReset}
+        className="px-[3vh] py-[1vh] bg-gray-300 text-gray-700 rounded hover:bg-gray-400 text-[2vh]"
+      >
+        Reset
+      </button>
     </div>
   );
 };
